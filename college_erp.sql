@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 19, 2024 at 05:58 PM
+-- Generation Time: Dec 19, 2024 at 07:28 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.3.14
 
@@ -31,28 +31,28 @@ DROP TABLE IF EXISTS `attendance`;
 CREATE TABLE IF NOT EXISTS `attendance` (
   `id` int NOT NULL AUTO_INCREMENT,
   `student_id` int NOT NULL,
-  `subject` varchar(255) NOT NULL,
+  `subject_id` int NOT NULL,
   `total_classes` int NOT NULL,
   `attended_classes` int NOT NULL,
-  `date` date NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `student_id` (`student_id`),
+  KEY `subject_id` (`subject_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`id`, `student_id`, `subject`, `total_classes`, `attended_classes`, `date`) VALUES
-(19, 1, 'Mathematics', 30, 25, '2024-12-01'),
-(20, 1, 'Physics', 25, 18, '2024-12-01'),
-(21, 1, 'Chemistry', 20, 15, '2024-12-01'),
-(22, 2, 'Mathematics', 28, 20, '2024-12-01'),
-(23, 2, 'Physics', 25, 15, '2024-12-01'),
-(24, 2, 'Chemistry', 22, 19, '2024-12-01'),
-(25, 3, 'Mathematics', 32, 29, '2024-12-01'),
-(26, 3, 'Physics', 30, 28, '2024-12-01'),
-(27, 3, 'Chemistry', 25, 23, '2024-12-01');
+INSERT INTO `attendance` (`id`, `student_id`, `subject_id`, `total_classes`, `attended_classes`) VALUES
+(1, 1, 1, 40, 30),
+(2, 1, 2, 45, 35),
+(3, 1, 3, 50, 40),
+(4, 2, 1, 40, 25),
+(5, 2, 2, 45, 20),
+(6, 2, 3, 50, 30),
+(7, 1, 4, 20, 10),
+(8, 1, 5, 30, 20),
+(9, 1, 6, 10, 10);
 
 -- --------------------------------------------------------
 
@@ -166,7 +166,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`, `phone`, `ge
 -- Constraints for table `attendance`
 --
 ALTER TABLE `attendance`
-  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
 -- Constraints for table `marks`
@@ -184,3 +185,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
