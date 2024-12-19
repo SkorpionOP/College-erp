@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'college_erp';
 $user = 'root';
-$password = 'Rua2712@';
+$password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
