@@ -12,8 +12,10 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch();
 
-// Fetch attendance records
-$stmt_attendance = $pdo->prepare("SELECT * FROM attendance WHERE student_id = ?");
+// Fetch attendance records along with subject names
+$stmt_attendance = $pdo->prepare("SELECT attendance.*, subjects.name AS subject_name FROM attendance
+                                  JOIN subjects ON attendance.subject_id = subjects.subject_id
+                                  WHERE student_id = ?");
 $stmt_attendance->execute([$_SESSION['user_id']]);
 $attendance_records = $stmt_attendance->fetchAll();
 
@@ -124,7 +126,7 @@ $current_total_percentage = ($total_classes > 0) ? ($total_attended / $total_cla
                 <?php foreach ($attendance_records as $record): 
                     $percentage = round(($record['attended_classes'] / $record['total_classes']) * 100, 2); ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($record['subject']); ?></td>
+                        <td><?php echo htmlspecialchars($record['subject_name']); ?></td>
                         <td><?php echo htmlspecialchars($record['total_classes']); ?></td>
                         <td><?php echo htmlspecialchars($record['attended_classes']); ?></td>
                         <td style="color: <?php echo $percentage >= 75 ? 'green' : 'red'; ?>;">
@@ -153,49 +155,92 @@ $current_total_percentage = ($total_classes > 0) ? ($total_attended / $total_cla
     </div>
 
     <script>
-        // Chart.js: Attendance Chart
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const attendanceData = {
-            labels: [
+// Chart.js: Attendance Chart
+const ctx = document.getElementById('attendanceChart').getContext('2d');
+const attendanceData = {
+    labels: [
+        <?php foreach ($attendance_records as $record) {
+            echo '"' . htmlspecialchars($record['subject_name']) . '",';
+        } ?>
+    ],
+    datasets: [{
+        label: 'Attendance Percentage',
+        data: [
+            <?php foreach ($attendance_records as $record) {
+                echo round(($record['attended_classes'] / $record['total_classes']) * 100, 2) . ',';
+            } ?>
+        ],
+        backgroundColor: function(context) {
+            const subjects = [
                 <?php foreach ($attendance_records as $record) {
-                    echo '"' . htmlspecialchars($record['subject']) . '",';
+                    $percentage = round(($record['attended_classes'] / $record['total_classes']) * 100, 2);
+                    echo $percentage >= 75 ? '"#36a2eb",' : '"#ff6384",';
                 } ?>
-            ],
-            datasets: [{
-                label: 'Attendance Percentage',
-                data: [
-                    <?php foreach ($attendance_records as $record) {
-                        echo round(($record['attended_classes'] / $record['total_classes']) * 100, 2) . ',';
-                    } ?>
-                ],
-                backgroundColor: [
-                    <?php foreach ($attendance_records as $record) {
-                        $percentage = round(($record['attended_classes'] / $record['total_classes']) * 100, 2);
-                        echo $percentage >= 75 ? '"#36a2eb",' : '"#ff6384",';
-                    } ?>
-                ],
-                hoverOffset: 4
-            }]
-        };
+            ];
+            return subjects;
+        },
+        hoverOffset: 4
+    }]
+};
 
-        new Chart(ctx, {
-            type: 'pie',
-            data: attendanceData,
-        });
-
-        // Attendance Calculator
-        document.getElementById('calculator').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const currentAttendance = parseFloat(document.getElementById('currentAttendance').value);
-            const remainingClasses = parseInt(document.getElementById('remainingClasses').value);
-            const total_attended =parseInt(document.getElementById('attended').value)
-            const total_classes =parseInt(document.getElementById('total').value)
-
-            const requiredClasses = Math.ceil(((total_classes+remainingClasses)*0.75)-total_attended);
-            document.getElementById('result').textContent = 
-            `You need to attend ${requiredClasses} out of the next ${remainingClasses} classes to reach 75%.`;
+new Chart(ctx, {
+    type: 'pie',
+    data: attendanceData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false, // Maintain chart aspect ratio when resizing
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                    }
+                }
             }
-        );
-    </script>
+        }
+    }
+});
+</script>
+<script>
+// Attendance Calculator
+document.getElementById('calculator').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const currentAttendance = getCurrentAttendance();
+    const remainingClasses = getRemainingClasses();
+    const total_attended = getTotalAttended();
+    const total_classes = getTotalClasses();
+
+    const requiredClasses = calculateRequiredClasses(total_attended, total_classes, remainingClasses);
+    displayResult(requiredClasses, remainingClasses);
+});
+
+function getCurrentAttendance() {
+    return parseFloat(document.getElementById('currentAttendance').value);
+}
+
+function getRemainingClasses() {
+    return parseInt(document.getElementById('remainingClasses').value);
+}
+
+function getTotalAttended() {
+    return parseInt(document.getElementById('attended').value);
+}
+
+function getTotalClasses() {
+    return parseInt(document.getElementById('total').value);
+}
+
+function calculateRequiredClasses(total_attended, total_classes, remainingClasses) {
+    return Math.ceil(((total_classes + remainingClasses) * 0.75) - total_attended);
+}
+
+function displayResult(requiredClasses, remainingClasses) {
+    document.getElementById('result').textContent = `You need to attend ${requiredClasses} out of the next ${remainingClasses} classes to reach 75%.`;
+}
+</script>
 </body>
 </html>
