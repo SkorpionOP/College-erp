@@ -26,7 +26,7 @@ switch ($page) {
 
     case 'create_user':
         // Form for creating a new user
-        include 'modules/create_user1.php';
+        include 'modules/create_user.php';
         break;
     
 
