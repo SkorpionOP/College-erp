@@ -80,7 +80,7 @@
             <?php if ($attendance_percentage < 75): ?>
                 <p class="warning">Warning: Your attendance is below 75%!</p>
             <?php endif; ?>
-            <a href="feedback.php" class="feedback-button">Feedback</a>
+            <a href="modules/feedback.php" class="feedback-button">Feedback</a>
         </div>
         <div class="shortcuts">
             <a href="?page=attendance">Attendance</a>
