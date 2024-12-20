@@ -26,7 +26,7 @@ switch ($page) {
 
     case 'create_user':
         // Form for creating a new user
-        include 'modules/create_user.php';
+        include 'modules/create_user1.php';
         break;
     
 
@@ -37,11 +37,22 @@ switch ($page) {
     case 'hash_password' :
         echo password_hash('123', PASSWORD_BCRYPT);
         break;
+        
     case 'attendance':
         include 'modules/attendance.php';
         break;
     case 'subjects':
         include 'modules/subjects.php';
+        break;
+    case 'notifications':
+        include 'modules/notifications.php';
+
+    case 'details':
+        include 'modules/details.php';
+        break;
+
+    case 'marks':
+        include 'modules/overallmarks.php';
         break;
     default:
         include 'templates/404.php';
