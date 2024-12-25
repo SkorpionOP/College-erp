@@ -1,0 +1,240 @@
+/* General container and layout */
+.manage-users-container {
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Styling */
+nav {
+    background-color: #004a99; /* Darker Blue */
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #005cbf; /* Light blue on hover */
+}
+
+/* Tab controls for switching between teachers and students */
+.tab-controls {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tab-controls button {
+    background-color: #005cbf; /* Light blue */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 0 12px;
+}
+
+.tab-controls button:hover {
+    background-color: #004a99; /* Dark blue on hover */
+}
+
+/* Table styling for user data */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.user-table th, .user-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background-color: #004a99; /* Dark blue */
+    color: white;
+}
+
+.user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-table td button {
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-table .view-user {
+    background-color: #28a745; /* Green for view */
+    color: white;
+}
+
+.user-table .view-user:hover {
+    background-color: #218838;
+}
+
+.user-table .edit-user {
+    background-color: #ffc107; /* Yellow for edit */
+    color: white;
+}
+
+.user-table .edit-user:hover {
+    background-color: #e0a800;
+}
+
+.user-table .delete-user {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+}
+
+.user-table .delete-user:hover {
+    background-color: #c82333;
+}
+
+/* User card for viewing details */
+#user-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    display: none;
+}
+
+#user-card h2 {
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+#user-card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#user-card #close-card {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#user-card #close-card:hover {
+    background-color: #5a6268;
+}
+
+/* Edit User Form */
+#edit-user-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    display: none;
+}
+
+#edit-user-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#edit-user-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#edit-user-form input, 
+#edit-user-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#edit-user-form button {
+    background-color: #005cbf; /* Light blue */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#edit-user-form button:hover {
+    background-color: #004a99; /* Dark blue on hover */
+}
+
+#edit-user-form #cancel-edit {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#edit-user-form #cancel-edit:hover {
+    background-color: #5a6268;
+}
+
+/* General Styling for Cards */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .manage-users-container {
+        width: 95%;
+    }
+
+    .tab-controls {
+        text-align: left;
+    }
+
+    .tab-controls button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .user-table td button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

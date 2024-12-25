@@ -1,0 +1,118 @@
+/* General body and container styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8; /* Light blue for background */
+    color: #333; /* Dark gray for text */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the content */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #007bff; /* Blue background for navbar */
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .navbar-brand h1 {
+    font-size: 24px;
+    color: white;
+}
+
+.navbar .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .navbar-links a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .navbar-links a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.logout-button {
+    background-color: #dc3545; /* Red background for logout */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Table styling for attendance */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.attendance-table th {
+    background-color: #007bff; /* Blue background for header */
+    color: white;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+.attendance-table tbody tr:hover {
+    background-color: #e9f5ff; /* Light blue on hover for rows */
+}
+
+/* Attendance percentage coloring */
+.attendance-table td:last-child {
+    font-weight: bold;
+}
+
+.attendance-table .low-attendance {
+    background-color: #f8d7da; /* Light red for low attendance */
+    color: #721c24; /* Dark red for low attendance text */
+}
+
+.attendance-table .medium-attendance {
+    background-color: #fff3cd; /* Light yellow for medium attendance */
+    color: #856404; /* Dark yellow for medium attendance text */
+}
+
+.attendance-table .high-attendance {
+    background-color: #d4edda; /* Light green for high attendance */
+    color: #155724; /* Dark green for high attendance text */
+}
+
+/* General text styling */
+h1 {
+    color: #007bff; /* Blue for headings */
+}
+
+.warning {
+    color: #dc3545; /* Red for warning text */
+}
