@@ -1,79 +1,119 @@
-This College ERP program is designed to streamline the management of academic and administrative tasks for students and staff in an educational institution. The system integrates several features to facilitate the efficient handling of essential functions such as attendance tracking, marks management, subject-related documents, and user account creation and login.
+# College ERP (Enterprise Resource Planning)
 
-Key Features:
-User Authentication: The system ensures that only authenticated users can access sensitive information. It provides login functionality and redirects users who are not logged in to the login page.
+A web-based application to streamline the management of academic and administrative tasks in a college. This system is designed to improve efficiency by providing distinct roles for Students, Teachers, and Admins.
 
-Student Dashboard:
+## Admin Login Details
+- **Username**: TheHonouredOne
+- **Password**: 1
 
-Attendance Records: Students can view their attendance records, including the status (present, absent) and the date of each class.
-Marks Management: Students can access their marks for different subjects, making it easier to monitor academic performance.
-Subject Information: The dashboard displays a list of subjects, providing detailed information such as the subject name, instructor details (name, phone, email), and links to relevant documents.
-Subject Details Page: Each subject has a dedicated page accessible through the dashboard. It displays the subject name, instructor details, and links to documents. The layout includes an interactive design where clicking on a subject redirects to its detail page.
+## Features
 
-Home Page: The program features an inviting home page with a linear gradient background, providing a welcoming and visually appealing entry point for users. It includes links to the login page and account creation, ensuring ease of access and user engagement.
+### Admin Role:
+- Manage user accounts (Students, Teachers, Admins).
+- Monitor feedback provided by users.
+- Track and update logs of activities.
+- Publish notifications to all users.
+- Manage timetable and subject details.
 
-Styling and User Experience: The design elements of the program emphasize usability with intuitive navigation, consistent use of fonts, colors, and button styles across pages. The CSS ensures smooth transitions and interactive elements, enhancing the overall user experience.
+### Teacher Role:
+- Mark student attendance.
+- Provide feedback to the Admin.
+- Manage and update student marks.
+- Access schedules and notifications.
 
-Overall, this program aims to simplify the management of academic tasks, improve communication between students and instructors, and offer a centralized platform for accessing college-related information efficiently
+### Student Role:
+- View attendance records.
+- Access marks and performance data.
+- Submit feedback to the Admin.
+- Stay updated with notifications and schedules.
 
-Here’s a sample **How to Use** text for your project repository:  
+## Tech Stack
+
+- **Frontend**: HTML, CSS, JavaScript (uses external CSS for better structure and maintenance).
+- **Backend**: PHP for server-side scripting.
+- **Database**: MySQL (via WAMP stack).
+
+## Database Structure
+
+The application interacts with the `college_erp1` database, which consists of the following tables:
+
+- **`activity_log`**: Tracks all user activities.
+- **`attendance`**: Maintains attendance records of students.
+- **`feedback`**: Stores feedback submitted by students and teachers.
+- **`instructors`**: Contains data about teachers.
+- **`marks`**: Records students' marks and grades.
+- **`notifications`**: Handles announcements and notifications.
+- **`subjects`**: Stores subject details.
+- **`timetable`**: Manages the scheduling of classes.
+- **`users`**: Manages login credentials and user roles.
+
+## Installation Guide
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/SkorpionOP/College-erp.git
+   ```
+
+2. Install WAMP or any LAMP stack on your system.
+
+3. Import the `college_erp1.sql` file into your MySQL server to set up the database:
+   - Open phpMyAdmin.
+   - Create a database named `college_erp1`.
+   - Import the SQL file.
+
+4. Configure the database connection in `db_connect.php`:
+   ```php
+   $servername = "localhost";
+   $username = "root";
+   $password = "";
+   $dbname = "college_erp";
+   ```
+
+5. Start the server and access the application:
+   - Place the project folder in the `www` or `htdocs` directory of your server.
+   - Open the browser and navigate to `http://localhost/College-erp`.
+
+## Usage
+
+1. **Admin Login**:
+   - Manage all aspects of the system, including user accounts and notifications.
+
+2. **Teacher Login**:
+   - Manage attendance and marks for students.
+
+3. **Student Login**:
+   - View personal records, including marks, attendance, and notifications.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add a new feature"
+   ```
+4. Push the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any queries or issues, feel free to contact:
+
+- **Author**: SkorpionOP
+- **GitHub**: [https://github.com/SkorpionOP](https://github.com/SkorpionOP)
 
 ---
 
-# How to Use College ERP  
-
-This guide explains how to set up and use the College ERP (Enterprise Resource Planning) system hosted in this repository.  
-
-## Prerequisites  
-1. Install [WAMP](https://www.wampserver.com/) or any web server that supports PHP and MySQL.  
-2. Ensure your system has the following installed:  
-   - PHP (v7.4 or higher)  
-   - MySQL or MariaDB  
-   - A browser to access the application.  
-
-## Setup  
-
-### 1. Clone the Repository  
-Clone the project from GitHub:  
-```bash  
-git clone https://github.com/SkorpionOP/College-erp.git  
-```  
-
-### 2. Place in Web Server Directory  
-Move the cloned project folder to the root directory of your web server:  
-- For **WAMP**: Place the project in `C:/wamp64/www/`.  
-- For **XAMPP**: Place the project in `C:/xampp/htdocs/`.  
-
-### 3. Configure the Database  
-1. Open **phpMyAdmin** through your web server interface or directly at `http://localhost/phpmyadmin`.  
-2. Create a new database named `college_erp`.  
-3. Import the database schema:  
-   - Go to the `Import` tab in phpMyAdmin.  
-   - Upload the `college_erp.sql` file from the repository's `database` folder.  
-4. Ensure the database credentials in the project are correct:  
-   - Open the `config.php` or `database.php` file in the project.  
-   - Update the credentials if necessary (e.g., `username`, `password`, and `database name`).  
-
-### 4. Start the Web Server  
-1. Launch your web server (e.g., WAMP or XAMPP).  
-2. Open your browser and navigate to:  
-   ```
-   http://localhost/College-erp  
-   ```
-
-## Features  
-- **User Login**: Log in with your credentials to access personalized features.  
-- **Data Management**: Manage student, staff, and course-related data through an easy-to-use interface.  
-- **Reports and Analytics**: Generate detailed reports and insights.  
-
-## Troubleshooting  
-1. **Blank Page/Error**: Ensure the database is set up correctly, and your PHP version is compatible.  
-2. **Connection Error**: Verify the database credentials in `config.php` match your setup.  
-3. **Missing Tables/Data**: Reimport the `college_erp.sql` file into your database.  
-
-## Contributing  
-Feel free to contribute by submitting issues or creating pull requests to improve the project.  
-
----
-
-Let me know if you need further customization!
+Thank you for using College ERP! Your feedback and contributions help us improve.
