@@ -40,7 +40,7 @@ foreach ($attendance_records as &$record) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Attendance - Admin</title>
-    <link rel="stylesheet" href="modules/admin/styles/attendance.css">
+    <link rel="stylesheet" href="modules/admin/styles/admin.css">
 </head>
 <body>
 
