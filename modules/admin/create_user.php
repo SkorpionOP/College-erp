@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User - College ERP</title>
-    <link rel="stylesheet" href="modules/admin/styles/create_user.css">
+    <link rel="stylesheet" href="modules/admin/styles/admin.css">
 </head>
 <body>
     <div class="container">
