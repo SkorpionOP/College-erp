@@ -32,13 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['marks'])) {
     $subject_id = $_POST['subject_id'];
     $exam_date = $_POST['exam_date'];
     $total_marks = $_POST['total_marks'];
+    $exam_type = $_POST['exam_type']; // New exam type field
 
     foreach ($_POST['marks'] as $student_id => $marks) {
-        $query = "INSERT INTO marks (user_id, subject_id, marks_obtained, total_marks, exam_date) 
-                  VALUES (:user_id, :subject_id, :marks_obtained, :total_marks, :exam_date)
+        $query = "INSERT INTO marks (user_id, subject_id, marks_obtained, total_marks, exam_type, exam_date) 
+                  VALUES (:user_id, :subject_id, :marks_obtained, :total_marks, :exam_type, :exam_date)
                   ON DUPLICATE KEY UPDATE 
                       marks_obtained = :marks_obtained, 
                       total_marks = :total_marks, 
+                      exam_type = :exam_type,
                       exam_date = :exam_date";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
@@ -46,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['marks'])) {
             ':subject_id' => $subject_id,
             ':marks_obtained' => $marks,
             ':total_marks' => $total_marks,
+            ':exam_type' => $exam_type,
             ':exam_date' => $exam_date
         ]);
     }
@@ -98,6 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['marks'])) {
 
             <label for="total_marks">Total Marks:</label>
             <input type="number" name="total_marks" id="total_marks" min="0" required>
+
+            <label for="exam_type">Exam Type:</label>
+            <select name="exam_type" id="exam_type" required>
+                <option value="Quiz">Quiz</option>
+                <option value="Midterm">Midterm</option>
+                <option value="Final">Final</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Other">Other</option>
+            </select>
 
             <table class="marks-table">
                 <thead>
