@@ -1,0 +1,457 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General body styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #0078D7;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: white;
+    color: #0078D7;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f7ff;
+}
+
+table tr:hover {
+    background-color: #e6efff;
+}
+
+/* Table Buttons */
+.details-table .btn, table button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.details-table .btn:hover, table button:hover {
+    background-color: #0056b3;
+}
+
+.details-table .btn-edit {
+    background-color: #28a745;
+}
+
+.details-table .btn-edit:hover {
+    background-color: #218838;
+}
+
+button.delete {
+    background-color: #dc3545;
+}
+
+button.delete:hover {
+    background-color: #b22222;
+}
+
+/* Status Badges */
+.status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.status.pending {
+    background-color: #ffeb3b;
+    color: #333;
+}
+
+.status.approved {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status.rejected {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Forms */
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-box label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.input-box input,
+.input-box select {
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.input-box input:focus,
+.input-box select:focus {
+    border-color: #0078D7;
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    font-size: 1.6rem;
+    color: #0078D7;
+}
+
+/* User Management Table */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.user-table th, .user-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    background-color: #004a99;
+    color: white;
+}
+
+.user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-table td button {
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-table .view-user {
+    background-color: #28a745;
+    color: white;
+}
+
+.user-table .edit-user {
+    background-color: #ffc107;
+    color: white;
+}
+
+.user-table .delete-user {
+    background-color: #dc3545;
+    color: white;
+}
+
+.user-table .view-user:hover {
+    background-color: #218838;
+}
+
+.user-table .edit-user:hover {
+    background-color: #e0a800;
+}
+
+.user-table .delete-user:hover {
+    background-color: #c82333;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+/* General Button Styles */
+button, .btn {
+    display: inline-block;
+    background-color: #0078D7;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #005a9e;
+    transform: scale(1.05);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Success Button */
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Warning Button */
+.btn-warning {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+/* Danger Button (Delete, Cancel) */
+.btn-danger, .delete {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover, .delete:hover {
+    background-color: #c82333;
+}
+
+/* Small Button */
+.btn-small {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* Large Button */
+.btn-large {
+    padding: 14px 20px;
+    font-size: 16px;
+}
+
+/* Full-width Button */
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Disabled Button */
+button:disabled, .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive Button Adjustments */
+@media (max-width: 768px) {
+    button, .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* General Link Styles */
+a {
+    text-decoration: none;
+    color: #0078D7;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+    color: #005a9e;
+    text-decoration: underline;
+}
+
+/* Buttons styled as links */
+a.btn {
+    display: inline-block;
+    background-color: #0078D7;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+a.btn:hover {
+    background-color: #005a9e;
+    transform: scale(1.05);
+}
+
+/* Inline text links (like in cards) */
+a.inline-link {
+    font-size: 14px;
+    color: #0078D7;
+    font-weight: 500;
+}
+
+a.inline-link:hover {
+    color: #005a9e;
+    text-decoration: underline;
+}
+
+/* Links inside cards */
+.card a {
+    font-size: 14px;
+    color: #0078D7;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.card a:hover {
+    color: #005a9e;
+    text-decoration: underline;
+}
+
+/* Active link state */
+a.active {
+    color: white;
+    background-color: #005a9e;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
