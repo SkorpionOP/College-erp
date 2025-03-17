@@ -1,9 +1,9 @@
 <?php
-
 require_once 'includes/db.php'; 
 
+// Redirect if user is not logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../modules/login.php"); // Redirect to login if not authenticated
+    header("Location: ../../modules/login.php"); 
     exit;
 }
 
@@ -13,17 +13,21 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Handle delete feedback request using AJAX
+// Handle DELETE request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_feedback_id'])) {
-    $delete_id = $_POST['delete_feedback_id'];
+    $delete_id = (int) $_POST['delete_feedback_id'];
+    
     $delete_query = "DELETE FROM feedback WHERE id = :id";
     $delete_stmt = $pdo->prepare($delete_query);
     $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT);
-    $delete_stmt->execute();
-    echo "Feedback deleted successfully"; // Return success message for AJAX
+
+    if ($delete_stmt->execute()) {
+        echo "Feedback deleted successfully";
+    } else {
+        echo "Error deleting feedback";
+    }
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +36,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_feedback_id'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Management</title>
-    <link rel="stylesheet" href="modules/admin/styles/admin.css"> <!-- Updated CSS path -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #0056b3;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        .feedback-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feedback-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            position: relative;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .view-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 5px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: left;
+        }
+
+        .modal-content {
+            font-size: 16px;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn:hover {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -56,10 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_feedback_id'])
                         <p><strong>Message:</strong> <?= htmlspecialchars($feedback['message']) ?></p>
                         <p><strong>Submitted At:</strong> <?= htmlspecialchars($feedback['created_at']) ?></p>
 
-                        <!-- View Feedback Button -->
                         <button class="view-btn" onclick="viewFeedback(<?= $feedback['id'] ?>)">View</button>
-
-                        <!-- Delete Feedback Form -->
                         <button class="delete-btn" onclick="deleteFeedback(<?= $feedback['id'] ?>)">Delete</button>
                     </div>
                 <?php endforeach; ?>
@@ -81,32 +192,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_feedback_id'])
         </div>
     </div>
 
-    <!-- Confirmation Modal for Deletion -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
-            <h2>Are you sure you want to delete this feedback?</h2>
-            <button id="confirmDeleteBtn" onclick="confirmDelete()">Yes</button>
-            <button onclick="closeDeleteModal()">No</button>
-        </div>
-    </div>
-
     <script>
+        // Store feedback data in JavaScript
+        const feedbacks = <?= json_encode($feedbacks); ?>;
+
         function viewFeedback(id) {
-            // Fetch feedback details from the database
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'view_feedback.php?id=' + id, true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const feedback = JSON.parse(xhr.responseText);
-                    document.getElementById('modalName').textContent = feedback.name;
-                    document.getElementById('modalEmail').textContent = feedback.email;
-                    document.getElementById('modalMessage').textContent = feedback.message;
-                    document.getElementById('modalCreatedAt').textContent = feedback.created_at;
-                    document.getElementById('viewModal').style.display = 'block';
-                }
-            };
-            xhr.send();
+            const selectedFeedback = feedbacks.find(fb => fb.id == id);
+            if (selectedFeedback) {
+                document.getElementById('modalName').textContent = selectedFeedback.name;
+                document.getElementById('modalEmail').textContent = selectedFeedback.email;
+                document.getElementById('modalMessage').textContent = selectedFeedback.message;
+                document.getElementById('modalCreatedAt').textContent = selectedFeedback.created_at;
+                document.getElementById('viewModal').style.display = 'block';
+            }
         }
 
         function closeModal() {
@@ -114,24 +212,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_feedback_id'])
         }
 
         function deleteFeedback(id) {
-            // Show confirmation modal for delete
-            document.getElementById('deleteModal').style.display = 'block';
-            document.getElementById('confirmDeleteBtn').onclick = function() {
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'feedback.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        alert(xhr.responseText); // Show success message
-                        location.reload(); // Reload the page to reflect changes
-                    }
-                };
-                xhr.send('delete_feedback_id=' + id);
-            };
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
+            if (confirm("Are you sure you want to delete this feedback?")) {
+                fetch('feedback.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'delete_feedback_id=' + id
+                })
+                .then(response => response.text())
+                .then(responseText => {
+                    alert(responseText);
+                    location.reload();
+                })
+                .catch(error => console.error('Error:', error));
+            }
         }
     </script>
 </body>
