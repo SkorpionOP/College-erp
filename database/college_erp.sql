@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 25, 2024 at 09:26 AM
+-- Generation Time: Mar 17, 2025 at 06:06 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.3.14
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`),
   KEY `subject_id` (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `attendance`
@@ -53,12 +53,14 @@ INSERT INTO `attendance` (`id`, `student_id`, `subject_id`, `total_classes`, `at
 (33, 8, 3, 2, 1),
 (34, 11, 3, 2, 1),
 (35, 20, 3, 4, 2),
-(36, 30, 2, 1, 1),
-(37, 31, 2, 3, 2),
+(36, 30, 2, 5, 2),
+(37, 31, 2, 5, 4),
 (38, 28, 1, 1, 1),
 (39, 30, 1, 2, 2),
 (40, 32, 1, 1, 1),
-(41, 31, 1, 2, 1);
+(41, 31, 1, 2, 1),
+(42, 28, 2, 4, 1),
+(43, 32, 2, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `leave_requests` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `leave_requests`
@@ -110,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `leave_requests` (
 INSERT INTO `leave_requests` (`id`, `student_id`, `request_text`, `status`, `created_at`, `updated_at`) VALUES
 (1, 7, 'Please grant me leave for 5 days', 'accepted', '2024-12-21 18:54:15', '2024-12-22 13:49:55'),
 (2, 10, 'please grant me leave for 5 days', 'accepted', '2024-12-22 12:02:45', '2024-12-22 12:03:05'),
-(3, 30, 'Hello sir i wanna watch mufasa please', 'accepted', '2024-12-24 16:01:42', '2024-12-24 16:03:56');
+(3, 30, 'Hello sir i wanna watch mufasa please', 'accepted', '2024-12-24 16:01:42', '2025-03-17 16:52:11'),
+(4, 32, 'hELLOOO', 'rejected', '2025-03-17 16:52:39', '2025-03-17 16:52:53');
 
 -- --------------------------------------------------------
 
@@ -125,42 +128,47 @@ CREATE TABLE IF NOT EXISTS `marks` (
   `subject_id` int NOT NULL,
   `marks_obtained` decimal(5,2) NOT NULL,
   `total_marks` decimal(5,2) NOT NULL,
+  `exam_type` enum('Quiz','Midterm','Final','Assignment','Other') NOT NULL DEFAULT 'Other',
   `exam_date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `subject_id` (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `marks`
 --
 
-INSERT INTO `marks` (`id`, `user_id`, `subject_id`, `marks_obtained`, `total_marks`, `exam_date`) VALUES
-(7, 2, 3, 1.00, 1.00, '2024-12-11'),
-(8, 3, 3, 1.00, 1.00, '2024-12-11'),
-(9, 4, 3, 1.00, 1.00, '2024-12-11'),
-(10, 5, 3, 1.00, 1.00, '2024-12-11'),
-(11, 6, 3, 1.00, 1.00, '2024-12-11'),
-(12, 7, 3, 1.00, 1.00, '2024-12-11'),
-(13, 8, 3, 1.00, 1.00, '2024-12-11'),
-(14, 2, 1, 1.00, 10.00, '2024-12-05'),
-(15, 3, 1, 1.00, 10.00, '2024-12-05'),
-(16, 4, 1, 1.00, 10.00, '2024-12-05'),
-(17, 6, 1, 1.00, 10.00, '2024-12-05'),
-(18, 7, 1, 1.00, 10.00, '2024-12-05'),
-(19, 8, 1, 1.00, 10.00, '2024-12-05'),
-(20, 10, 1, 1.00, 10.00, '2024-12-05'),
-(21, 11, 1, 2.00, 10.00, '2024-12-05'),
-(22, 2, 3, 1.00, 11.00, '2024-12-02'),
-(23, 4, 3, 1.00, 11.00, '2024-12-02'),
-(24, 6, 3, 1.00, 11.00, '2024-12-02'),
-(25, 7, 3, 5.00, 11.00, '2024-12-02'),
-(26, 8, 3, 7.00, 11.00, '2024-12-02'),
-(27, 10, 3, 8.00, 11.00, '2024-12-02'),
-(28, 11, 3, 11.00, 11.00, '2024-12-02'),
-(29, 20, 3, 5.00, 11.00, '2024-12-02'),
-(30, 28, 2, 15.00, 30.00, '2024-12-11'),
-(31, 30, 2, 23.00, 30.00, '2024-12-11'),
-(32, 31, 2, 20.00, 30.00, '2024-12-11');
+INSERT INTO `marks` (`id`, `user_id`, `subject_id`, `marks_obtained`, `total_marks`, `exam_type`, `exam_date`) VALUES
+(7, 2, 3, 1.00, 1.00, 'Quiz', '2024-12-11'),
+(8, 3, 3, 1.00, 1.00, 'Quiz', '2024-12-11'),
+(9, 4, 3, 1.00, 1.00, 'Midterm', '2024-12-11'),
+(10, 5, 3, 1.00, 1.00, 'Midterm', '2024-12-11'),
+(11, 6, 3, 1.00, 1.00, 'Final', '2024-12-11'),
+(12, 7, 3, 1.00, 1.00, 'Final', '2024-12-11'),
+(13, 8, 3, 1.00, 1.00, 'Assignment', '2024-12-11'),
+(14, 2, 1, 1.00, 10.00, 'Quiz', '2024-12-05'),
+(15, 3, 1, 1.00, 10.00, 'Quiz', '2024-12-05'),
+(16, 4, 1, 1.00, 10.00, 'Midterm', '2024-12-05'),
+(17, 6, 1, 1.00, 10.00, 'Midterm', '2024-12-05'),
+(18, 7, 1, 1.00, 10.00, 'Final', '2024-12-05'),
+(19, 8, 1, 1.00, 10.00, 'Final', '2024-12-05'),
+(20, 10, 1, 1.00, 10.00, 'Assignment', '2024-12-05'),
+(21, 11, 1, 2.00, 10.00, 'Assignment', '2024-12-05'),
+(22, 2, 3, 1.00, 11.00, 'Quiz', '2024-12-02'),
+(23, 4, 3, 1.00, 11.00, 'Quiz', '2024-12-02'),
+(24, 6, 3, 1.00, 11.00, 'Midterm', '2024-12-02'),
+(25, 7, 3, 5.00, 11.00, 'Midterm', '2024-12-02'),
+(26, 8, 3, 7.00, 11.00, 'Final', '2024-12-02'),
+(27, 10, 3, 8.00, 11.00, 'Final', '2024-12-02'),
+(28, 11, 3, 11.00, 11.00, 'Assignment', '2024-12-02'),
+(29, 20, 3, 5.00, 11.00, 'Assignment', '2024-12-02'),
+(30, 28, 2, 15.00, 30.00, 'Midterm', '2024-12-11'),
+(31, 30, 2, 23.00, 30.00, 'Final', '2024-12-11'),
+(32, 31, 2, 20.00, 30.00, 'Final', '2024-12-11'),
+(33, 28, 2, 10.00, 100.00, 'Assignment', '2025-03-13'),
+(34, 30, 2, 20.00, 100.00, 'Assignment', '2025-03-13'),
+(35, 31, 2, 30.00, 100.00, 'Assignment', '2025-03-13'),
+(36, 32, 2, 40.00, 100.00, 'Assignment', '2025-03-13');
 
 -- --------------------------------------------------------
 
@@ -185,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 
 INSERT INTO `subjects` (`subject_id`, `name`, `document_links`, `total_classes`, `instructor_id`) VALUES
 (1, 'MicroProcessors and Interfaces', 'https://drive.google.com/drive/folders/1_2A7PLUZpA-PgDei3qMi8ly4NAnlO75Y?usp=drive_link', 2, 25),
-(2, 'Web Technologies', 'https://drive.google.com/drive/folders/1ZXjFq_1rOdjf8yeHrq71CpgP5OAHGi0T?usp=drive_link', 3, 23),
+(2, 'Web Technologies', 'https://drive.google.com/drive/folders/1ZXjFq_1rOdjf8yeHrq71CpgP5OAHGi0T?usp=drive_link', 5, 23),
 (3, 'Machine Learning', 'https://drive.google.com/drive/folders/1wxnXbvnxiifenLjpqMFZnWaDn7rA2aDB?usp=drive_link', 0, 27),
 (4, 'Statistical and Predictive Analysis', 'https://drive.google.com/drive/folders/1_vjZYNPkAJVR5zwfq_B7Srk2wUbtAJJi?usp=drive_link', 0, 26),
 (5, 'Software Engineering', 'https://drive.google.com/drive/folders/1aXIE384cpNgCHmKbZZV5keFyg31QsdJl?usp=drive_link', 0, 24),
@@ -279,35 +287,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`, `phone`, `ge
 (30, '22331A05C5', '$2y$10$cvAhFXfdx3Bmnq/vGHli5utyJ6kxVWaOQvSwHFEznpAcb5rnEtNkG', 'PALLE KIRAN KUMAR', 'kirankumar82054@gmail.com', '9490468679', 'Male', 'Student', '2024-12-22 17:20:33', '2024-12-22 17:20:33', 22, 1),
 (31, '22331A05C3', '$2y$10$tKqJispyJFF.WopkHo62uexG36vg1ZxrlSpXjythUasnfLJoYBkFm', 'PALA SIDDESWARA REDDY', 'SID@GMAIL.COM', '6281424496', 'Male', 'Student', '2024-12-22 17:21:09', '2024-12-24 16:05:48', 23, 1),
 (32, '22331A05C4', '$2y$10$Hu2CHLeshatGRuABG0PAYOYQ/.9YnHq8fExsG7wJenZHQLxt.NqXu', 'Sai varun', 'sai143@gmai.com', '11231324', 'Male', 'Student', '2024-12-24 16:04:27', '2024-12-24 16:04:27', 26, 1);
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
-
---
--- Constraints for table `leave_requests`
---
-ALTER TABLE `leave_requests`
-  ADD CONSTRAINT `leave_requests_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `marks`
---
-ALTER TABLE `marks`
-  ADD CONSTRAINT `marks_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
-
---
--- Constraints for table `subjects`
---
-ALTER TABLE `subjects`
-  ADD CONSTRAINT `fk_instructor_id` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
