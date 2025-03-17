@@ -93,6 +93,114 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User - College ERP</title>
     <link rel="stylesheet" href="modules/admin/styles/admin.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1565c0;
+        }
+
+        /* Input Fields */
+        .input-box {
+            margin-bottom: 18px;
+        }
+
+        .input-box input, 
+        .input-box select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #90caf9;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus, 
+        .input-box select:focus {
+            border-color: #1565c0;
+            outline: none;
+            box-shadow: 0 0 8px rgba(21, 101, 192, 0.3);
+        }
+
+        /* Gender Section */
+        .gender-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1565c0;
+        }
+
+        .category {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+
+        .category label {
+            display: flex;
+            align-items: center;
+        }
+
+        .category input {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        /* Submit Button */
+        .button input {
+            width: 100%;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .button input:hover {
+            background-color: #0d47a1;
+        }
+
+        /* Links */
+        a {
+            color: #1565c0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #0d47a1;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
