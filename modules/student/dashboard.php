@@ -17,7 +17,7 @@ if (!$user) {
     $user = ['name' => 'Guest'];
 }
 
-// Fetch attendance records using total_classes from subjects table
+// Fetch attendance records
 $stmt_attendance = $pdo->prepare("
     SELECT 
         SUM(attended_classes) AS attended,
@@ -28,20 +28,24 @@ $stmt_attendance = $pdo->prepare("
 ");
 $stmt_attendance->execute([$_SESSION['user_id']]);
 $attendance = $stmt_attendance->fetch();
-$attendance_percentage = $attendance['total_classes'] > 0 
+
+// Prevent division by zero
+$attendance_percentage = ($attendance['total_classes'] > 0) 
     ? round(($attendance['attended'] / $attendance['total_classes']) * 100, 2) 
     : 0;
 
-// Fetch marks summary with subject names and grades
+// Fetch marks summary with subject names, grades, and exam types
 $stmt_marks = $pdo->prepare("
     SELECT 
         s.name AS subject_name,
         m.marks_obtained,
         m.total_marks,
+        m.exam_type,
         (m.marks_obtained / m.total_marks) * 100 AS percentage
     FROM marks m
     JOIN subjects s ON m.subject_id = s.subject_id
     WHERE m.user_id = ?
+    ORDER BY m.exam_date DESC
     LIMIT 5
 ");
 $stmt_marks->execute([$_SESSION['user_id']]);
@@ -65,7 +69,7 @@ $next_day = date('Y-m-d', strtotime('+1 day', $current_day_timestamp));
 
 // Fetch timetable for the selected day
 $day_of_week = date('l', $current_day_timestamp);
-$stmt_timetable = $pdo->prepare("SELECT * FROM timetable WHERE day_of_week = ?");
+$stmt_timetable = $pdo->prepare("SELECT * FROM timetable WHERE day_of_week = ?"); // Fixed column name
 $stmt_timetable->execute([$day_of_week]);
 $today_timetable = $stmt_timetable->fetch(PDO::FETCH_ASSOC);
 
@@ -87,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - College ERP</title>
-    <link rel="stylesheet" href="modules/student/styles/dashboard.css">
+    <link rel="stylesheet" href="modules/student/styles/style.css">
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -97,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
         </div>
         <ul class="navbar-links">
             <li><a href="?page=dashboard">Dashboard</a></li>
+            <li><a href="?page=attendance">Attendance</a></li>
             <li><a href="?page=subjects">Subjects</a></li>
             <li><a href="?page=feedback">Feedback</a></li>
             <li><a href="?page=leaves">Leaves</a></li>
@@ -118,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
         <div class="dashboard-grid">
             <!-- Timetable -->
             <div class="card">
-                <h3>Today's Timetable (<?= $day_of_week ?>)</h3>
+                <h3>Today's Timetable (<?= htmlspecialchars($day_of_week) ?>)</h3>
                 <div class="timetable-navigation">
                     <a href="?page=dashboard&day=<?= $previous_day ?>" class="navigation-button">Previous Day</a>
                     <a href="?page=dashboard&day=<?= $next_day ?>" class="navigation-button">Next Day</a>
@@ -132,24 +137,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
                     </thead>
                     <tbody>
                         <?php if ($today_timetable): ?>
-                            <tr><td>09:00 - 10:00</td><td><?= htmlspecialchars($today_timetable['period_1_subject']) ?></td></tr>
-                            <tr><td>10:00 - 11:00</td><td><?= htmlspecialchars($today_timetable['period_2_subject']) ?></td></tr>
-                            <tr><td>11:00 - 12:00</td><td><?= htmlspecialchars($today_timetable['period_3_subject']) ?></td></tr>
-                            <tr><td>12:00 - 12:45</td><td>Lunch</td></tr>
-                            <tr><td>12:45 - 1:45</td><td><?= htmlspecialchars($today_timetable['period_5_subject']) ?></td></tr>
-                            <tr><td>1:45 - 2:45</td><td><?= htmlspecialchars($today_timetable['period_6_subject']) ?></td></tr>
-                            <tr><td>2:45 - 3:45</td><td><?= htmlspecialchars($today_timetable['period_7_subject']) ?></td></tr>
+                            <?php foreach ($today_timetable as $key => $value): ?>
+                                <?php if (strpos($key, '_subject') !== false): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($today_timetable[str_replace('_subject', '_start', $key)]) ?> - <?= htmlspecialchars($today_timetable[str_replace('_subject', '_end', $key)]) ?></td>
+                                        <td><?= htmlspecialchars($value) ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <tr><td colspan="2">No timetable found for today.</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- Attendance Card -->
-            <div class="card">
-                <h3><a href="?page=attendance">Attendance</a></h3>
-                <canvas id="attendanceChart"></canvas>
             </div>
 
             <!-- Marks Summary -->
@@ -159,19 +159,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            <th>Grade</th>
+                            <th>Exam Type</th>
+                            <th>Marks</th>
+                            <th>Percentage</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($marks_records as $record): 
-                            $grade = $record['percentage'] >= 90 ? 'A+' :
-                                     ($record['percentage'] >= 85 ? 'A' :
-                                     ($record['percentage'] >= 70 ? 'B' :
-                                     ($record['percentage'] >= 50 ? 'C' : 'F')));
-                        ?>
+                        <?php foreach ($marks_records as $record): ?>
                             <tr>
                                 <td><?= htmlspecialchars($record['subject_name']) ?></td>
-                                <td><?= htmlspecialchars($grade) ?></td>
+                                <td><?= htmlspecialchars($record['exam_type']) ?></td>
+                                <td><?= htmlspecialchars($record['marks_obtained']) ?>/<?= htmlspecialchars($record['total_marks']) ?></td>
+                                <td><?= round($record['percentage'], 2) ?>%</td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -179,26 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script>
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Attended', 'Missed'],
-                datasets: [{
-                    data: [<?= $attendance['attended'] ?>, <?= $attendance['total_classes'] - $attendance['attended'] ?>],
-                    backgroundColor: ['#4caf50', '#f44336'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
+
