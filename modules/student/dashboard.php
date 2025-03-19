@@ -103,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave_request'])) {
             <li><a href="?page=dashboard">Dashboard</a></li>
             <li><a href="?page=attendance">Attendance</a></li>
             <li><a href="?page=subjects">Subjects</a></li>
+            <li><a href="?page=marks">Marks</a></li>
             <li><a href="?page=feedback">Feedback</a></li>
             <li><a href="?page=leaves">Leaves</a></li>
             <li><a href="?page=profile">Profile</a></li>
