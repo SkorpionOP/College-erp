@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 17, 2025 at 06:06 PM
+-- Generation Time: Mar 24, 2025 at 04:54 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.3.14
 
@@ -37,30 +37,37 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`),
   KEY `subject_id` (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `attendance`
 --
 
 INSERT INTO `attendance` (`id`, `student_id`, `subject_id`, `total_classes`, `attended_classes`) VALUES
-(27, 10, 3, 4, 4),
-(28, 10, 2, 2, 2),
-(29, 10, 1, 4, 2),
-(30, 11, 1, 4, 3),
-(31, 7, 1, 3, 2),
-(32, 8, 1, 4, 3),
-(33, 8, 3, 2, 1),
-(34, 11, 3, 2, 1),
-(35, 20, 3, 4, 2),
-(36, 30, 2, 5, 2),
-(37, 31, 2, 5, 4),
-(38, 28, 1, 1, 1),
-(39, 30, 1, 2, 2),
-(40, 32, 1, 1, 1),
-(41, 31, 1, 2, 1),
-(42, 28, 2, 4, 1),
-(43, 32, 2, 5, 1);
+(44, 28, 2, 4, 4),
+(45, 30, 2, 5, 3),
+(46, 32, 2, 4, 4),
+(47, 31, 2, 5, 4),
+(48, 28, 5, 5, 4),
+(49, 30, 5, 5, 5),
+(50, 31, 5, 5, 3),
+(51, 32, 5, 5, 4),
+(52, 28, 1, 4, 4),
+(53, 30, 1, 3, 3),
+(54, 32, 1, 3, 3),
+(55, 31, 1, 4, 2),
+(56, 28, 4, 4, 3),
+(57, 30, 4, 4, 3),
+(58, 31, 4, 2, 2),
+(59, 32, 4, 4, 3),
+(60, 28, 3, 4, 4),
+(61, 30, 3, 2, 2),
+(62, 31, 3, 5, 3),
+(63, 32, 3, 3, 3),
+(64, 28, 6, 5, 4),
+(65, 30, 6, 4, 2),
+(66, 31, 6, 5, 2),
+(67, 32, 6, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -76,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `message` text NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `feedback`
@@ -85,7 +92,8 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `created_at`) VALUES
 (1, 'pio', 'kirankumar82054@gmail.com', 'Sometimes when I look at the moon and I like to imagine you do too—\r\nA bridge in the sky and there&#039;s an invisible line connecting U and I, across miles. After sunset, can we meet on the moon?', '2024-12-20 19:11:35'),
 (2, 'pio', 'kirankumar82054@gmail.com', 'Sometimes when I look at the moon and I like to imagine you do too—\r\nA bridge in the sky and there&#039;s an invisible line connecting U and I, across miles. After sunset, can we meet on the moon?', '2024-12-20 19:11:52'),
-(3, 'Sai varun', 'sai143@gmai.com', 'Pora', '2024-12-21 08:29:54');
+(3, 'Sai varun', 'sai143@gmai.com', 'Pora', '2024-12-21 08:29:54'),
+(4, 'Rama santhosh', '11@gmail.com', 'Please improve clg website', '2025-03-19 15:47:24');
 
 -- --------------------------------------------------------
 
@@ -103,17 +111,7 @@ CREATE TABLE IF NOT EXISTS `leave_requests` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `leave_requests`
---
-
-INSERT INTO `leave_requests` (`id`, `student_id`, `request_text`, `status`, `created_at`, `updated_at`) VALUES
-(1, 7, 'Please grant me leave for 5 days', 'accepted', '2024-12-21 18:54:15', '2024-12-22 13:49:55'),
-(2, 10, 'please grant me leave for 5 days', 'accepted', '2024-12-22 12:02:45', '2024-12-22 12:03:05'),
-(3, 30, 'Hello sir i wanna watch mufasa please', 'accepted', '2024-12-24 16:01:42', '2025-03-17 16:52:11'),
-(4, 32, 'hELLOOO', 'rejected', '2025-03-17 16:52:39', '2025-03-17 16:52:53');
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `marks` (
   `exam_date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `subject_id` (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `marks`
@@ -168,7 +166,31 @@ INSERT INTO `marks` (`id`, `user_id`, `subject_id`, `marks_obtained`, `total_mar
 (33, 28, 2, 10.00, 100.00, 'Assignment', '2025-03-13'),
 (34, 30, 2, 20.00, 100.00, 'Assignment', '2025-03-13'),
 (35, 31, 2, 30.00, 100.00, 'Assignment', '2025-03-13'),
-(36, 32, 2, 40.00, 100.00, 'Assignment', '2025-03-13');
+(36, 32, 2, 40.00, 100.00, 'Assignment', '2025-03-13'),
+(37, 28, 2, 49.00, 50.00, 'Midterm', '2025-03-03'),
+(38, 30, 2, 50.00, 50.00, 'Midterm', '2025-03-03'),
+(39, 31, 2, 30.00, 50.00, 'Midterm', '2025-03-03'),
+(40, 32, 2, 10.00, 50.00, 'Midterm', '2025-03-03'),
+(41, 28, 5, 25.00, 30.00, 'Midterm', '2025-02-27'),
+(42, 30, 5, 20.00, 30.00, 'Midterm', '2025-02-27'),
+(43, 31, 5, 23.00, 30.00, 'Midterm', '2025-02-27'),
+(44, 32, 5, 24.00, 30.00, 'Midterm', '2025-02-27'),
+(45, 28, 1, 9.00, 10.00, 'Other', '2025-03-11'),
+(46, 30, 1, 9.00, 10.00, 'Other', '2025-03-11'),
+(47, 31, 1, 8.00, 10.00, 'Other', '2025-03-11'),
+(48, 32, 1, 9.00, 10.00, 'Other', '2025-03-11'),
+(49, 28, 4, 10.00, 10.00, 'Quiz', '2025-03-06'),
+(50, 30, 4, 10.00, 10.00, 'Quiz', '2025-03-06'),
+(51, 31, 4, 10.00, 10.00, 'Quiz', '2025-03-06'),
+(52, 32, 4, 10.00, 10.00, 'Quiz', '2025-03-06'),
+(53, 28, 3, 5.00, 10.00, 'Assignment', '2025-03-05'),
+(54, 30, 3, 7.00, 10.00, 'Assignment', '2025-03-05'),
+(55, 31, 3, 8.00, 10.00, 'Assignment', '2025-03-05'),
+(56, 32, 3, 9.00, 10.00, 'Assignment', '2025-03-05'),
+(57, 28, 6, 49.00, 50.00, 'Other', '2025-03-12'),
+(58, 30, 6, 40.00, 50.00, 'Other', '2025-03-12'),
+(59, 31, 6, 45.00, 50.00, 'Other', '2025-03-12'),
+(60, 32, 6, 47.00, 50.00, 'Other', '2025-03-12');
 
 -- --------------------------------------------------------
 
@@ -192,12 +214,12 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `name`, `document_links`, `total_classes`, `instructor_id`) VALUES
-(1, 'MicroProcessors and Interfaces', 'https://drive.google.com/drive/folders/1_2A7PLUZpA-PgDei3qMi8ly4NAnlO75Y?usp=drive_link', 2, 25),
+(1, 'MicroProcessors and Interfaces', 'https://drive.google.com/drive/folders/1_2A7PLUZpA-PgDei3qMi8ly4NAnlO75Y?usp=drive_link', 4, 25),
 (2, 'Web Technologies', 'https://drive.google.com/drive/folders/1ZXjFq_1rOdjf8yeHrq71CpgP5OAHGi0T?usp=drive_link', 5, 23),
-(3, 'Machine Learning', 'https://drive.google.com/drive/folders/1wxnXbvnxiifenLjpqMFZnWaDn7rA2aDB?usp=drive_link', 0, 27),
-(4, 'Statistical and Predictive Analysis', 'https://drive.google.com/drive/folders/1_vjZYNPkAJVR5zwfq_B7Srk2wUbtAJJi?usp=drive_link', 0, 26),
-(5, 'Software Engineering', 'https://drive.google.com/drive/folders/1aXIE384cpNgCHmKbZZV5keFyg31QsdJl?usp=drive_link', 0, 24),
-(6, 'Effective Technical Communication', 'https://drive.google.com/drive/folders/15CBribzks1OJPEXbluyDor-1PZG8gnTz?usp=drive_link', 0, 22);
+(3, 'Machine Learning', 'https://drive.google.com/drive/folders/1wxnXbvnxiifenLjpqMFZnWaDn7rA2aDB?usp=drive_link', 5, 27),
+(4, 'Statistical and Predictive Analysis', 'https://drive.google.com/drive/folders/1_vjZYNPkAJVR5zwfq_B7Srk2wUbtAJJi?usp=drive_link', 4, 26),
+(5, 'Software Engineering', 'https://drive.google.com/drive/folders/1aXIE384cpNgCHmKbZZV5keFyg31QsdJl?usp=drive_link', 5, 24),
+(6, 'Effective Technical Communication', 'https://drive.google.com/drive/folders/15CBribzks1OJPEXbluyDor-1PZG8gnTz?usp=drive_link', 5, 22);
 
 -- --------------------------------------------------------
 
@@ -283,10 +305,10 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`, `phone`, `ge
 (25, 'Santosh', '$2y$10$lEmaG3WU8Z3YI6S6kKcJj.tR4Nui3vwcICi.pIogU8Jom2nxkUzxi', 'K. Santosh Jhansi', '11@gmail.com', '1233344256', 'Female', 'Teacher', '2024-12-22 17:15:42', '2024-12-22 17:15:42', 22, 1),
 (26, 'srinu', '$2y$10$HZ7y1o.lf9sG1d/u8yjQ6eaWLWi47kPRWcuXDRQ6DCwW0ikFN8pMm', 'M. srinivasrao', '1111@gmail.com', '1234527891', 'Male', 'Teacher', '2024-12-22 17:16:47', '2024-12-22 17:16:47', 22, 4),
 (27, 'vara', '$2y$10$SZiqUZAFrdFQHA4rxGXNP.oiaWX//doUdf1CnAWcc3Swb0PBFylbC', 'V. Varalakshmi', 'varalakshmi@gmail.com', '1234567891', 'Female', 'Teacher', '2024-12-22 17:17:29', '2024-12-22 17:17:29', 22, 3),
-(28, '23331A0507', '$2y$10$/jsxOZPY4cD3hP7SQsg1ReI6rULCpQ0dm.J2.4YCYZoViNBeHn0oG', 'GOGULA OMKAR VENKAT', 'OMKAR@GMAIL.COM', '7337501892', 'Male', 'Student', '2024-12-22 17:19:39', '2024-12-22 17:19:39', 23, 1),
+(28, '22331A0574', '$2y$10$/jsxOZPY4cD3hP7SQsg1ReI6rULCpQ0dm.J2.4YCYZoViNBeHn0oG', 'K.ELISHA', 'elisha@gmail.com', '123456789', 'Female', 'Student', '2024-12-22 17:19:39', '2025-03-24 04:39:46', 23, 1),
 (30, '22331A05C5', '$2y$10$cvAhFXfdx3Bmnq/vGHli5utyJ6kxVWaOQvSwHFEznpAcb5rnEtNkG', 'PALLE KIRAN KUMAR', 'kirankumar82054@gmail.com', '9490468679', 'Male', 'Student', '2024-12-22 17:20:33', '2024-12-22 17:20:33', 22, 1),
-(31, '22331A05C3', '$2y$10$tKqJispyJFF.WopkHo62uexG36vg1ZxrlSpXjythUasnfLJoYBkFm', 'PALA SIDDESWARA REDDY', 'SID@GMAIL.COM', '6281424496', 'Male', 'Student', '2024-12-22 17:21:09', '2024-12-24 16:05:48', 23, 1),
-(32, '22331A05C4', '$2y$10$Hu2CHLeshatGRuABG0PAYOYQ/.9YnHq8fExsG7wJenZHQLxt.NqXu', 'Sai varun', 'sai143@gmai.com', '11231324', 'Male', 'Student', '2024-12-24 16:04:27', '2024-12-24 16:04:27', 26, 1);
+(31, '22331A05A0', '$2y$10$tKqJispyJFF.WopkHo62uexG36vg1ZxrlSpXjythUasnfLJoYBkFm', 'M. RAHUL', 'rahul@gmail.com', '9876543210', 'Male', 'Student', '2024-12-22 17:21:09', '2025-03-24 04:40:30', 23, 1),
+(32, '23335A0510', '$2y$10$Hu2CHLeshatGRuABG0PAYOYQ/.9YnHq8fExsG7wJenZHQLxt.NqXu', 'K. RAMANA KUMARI', 'KRK@gmail.com', '11231324', 'Female', 'Student', '2024-12-24 16:04:27', '2025-03-24 04:41:16', 26, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
