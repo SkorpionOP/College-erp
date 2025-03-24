@@ -90,9 +90,6 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `created_at`) VALUES
-(1, 'pio', 'kirankumar82054@gmail.com', 'Sometimes when I look at the moon and I like to imagine you do too—\r\nA bridge in the sky and there&#039;s an invisible line connecting U and I, across miles. After sunset, can we meet on the moon?', '2024-12-20 19:11:35'),
-(2, 'pio', 'kirankumar82054@gmail.com', 'Sometimes when I look at the moon and I like to imagine you do too—\r\nA bridge in the sky and there&#039;s an invisible line connecting U and I, across miles. After sunset, can we meet on the moon?', '2024-12-20 19:11:52'),
-(3, 'Sai varun', 'sai143@gmai.com', 'Pora', '2024-12-21 08:29:54'),
 (4, 'Rama santhosh', '11@gmail.com', 'Please improve clg website', '2025-03-19 15:47:24');
 
 -- --------------------------------------------------------
